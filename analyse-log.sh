@@ -1,6 +1,15 @@
 #!/bin/bash
 
-LOG_DIR="/home/logs"
+##########################################################################
+#  
+#  Author : Apon Roy
+#  Date   : 17 - 08 - 2025
+#  Purpose : To find the error, fatal and critical logs from log files..
+#
+###########################################################################
+
+
+LOG_DIR="/home/logs/"
 APP_LOG_FILE="application.log"
 SYS_LOG_FILE="system.log"
 
@@ -8,23 +17,21 @@ ERROR_PATTERNS=("ERROR" "FATAL" "CRITICAL")
 
 echo "analysing log files"
 echo "==================="
+
 echo -e "\nList of the files updated in last 24 hours" 
-find $LOG_DIR -name "*.log" -mtime -1
+LOG_FILES=$(find "$LOG_DIR" -name "*.log" -mtime -1)
+echo "$LOG_FILES"
 
-echo -e "\nSearching Error logs in appication.log file"
-grep "${ERROR_PATTERNS[0]}" "$LOG_DIR/$APP_LOG_FILE"
+for LOG_FILE in $LOG_FILES; do
+   echo -e "\nSearching ${ERROR_PATTERNS[0]}  logs in $LOG_FILE"
+   grep "${ERROR_PATTERNS[0]}" "$LOG_FILE"
 
-echo -e "\nNumber of error logs found in application.log"
-grep -c "${ERROR_PATTERNS[0]}" "$LOG_DIR/$APP_LOG_FILE"
+   echo -e "\nNumber of ${ERROR_PATTERNS[0]} logs found in $LOG_FILE"
+   grep -c "${ERROR_PATTERNS[0]}" "$LOG_FILE"
 
-echo -e "\nNumber of fatal logs found in application.log"
-grep -c "${ERROR_PATTERNS[1]}" "$LOG_DIR/$APP_LOG_FILE"
+   echo -e "\nNumber of ${ERROR_PATTERNS[1]} logs found in $LOG_FILE"
+   grep -c "${ERROR_PATTERNS[1]}" "$LOG_FILE"
 
-echo -e "\nNumber of fatal logs found in system.log"
-grep -c "${ERROR_PATTERNS[1]}" "$SYS_LOG_FILE"
-
-echo -e "\nNumber of critical logs found in system.log"
-grep -c "${ERROR_PATTERNS[2]}" "$SYS_LOG_FILE"
-
-echo -e "\nNumber of critical logs found in system.log"
-grep "${ERROR_PATTERNS[2]}" "$SYS_LOG_FILE"
+   echo -e "\nNumber of ${ERROR_PATTERNS[2]} logs found in $LOG_FILE"
+   grep -c "${ERROR_PATTERNS[2]}" "$LOG_FILE"
+done   
