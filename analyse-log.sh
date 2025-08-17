@@ -23,15 +23,18 @@ LOG_FILES=$(find "$LOG_DIR" -name "*.log" -mtime -1)
 echo "$LOG_FILES"
 
 for LOG_FILE in $LOG_FILES; do
-   echo -e "\nSearching ${ERROR_PATTERNS[0]}  logs in $LOG_FILE"
+   echo -e "\nSearching ${ERROR_PATTERNS[0]}  logs in $LOG_FILE ---> "
    grep "${ERROR_PATTERNS[0]}" "$LOG_FILE"
-
-   echo -e "\nNumber of ${ERROR_PATTERNS[0]} logs found in $LOG_FILE"
+   echo -e "\nNumber of ${ERROR_PATTERNS[0]} logs found in $LOG_FILE :   "
    grep -c "${ERROR_PATTERNS[0]}" "$LOG_FILE"
-
-   echo -e "\nNumber of ${ERROR_PATTERNS[1]} logs found in $LOG_FILE"
+    
+   echo -e "\nSerching ${ERROR_PATTERNS[1]} logs in $LOG_FILE ---> "
+   grep "${ERROR_PATTERNS[1]}" "$LOG_FILE" 
+   echo -e "\nNumber of ${ERROR_PATTERNS[1]} logs found in $LOG_FILE :"
    grep -c "${ERROR_PATTERNS[1]}" "$LOG_FILE"
 
-   echo -e "\nNumber of ${ERROR_PATTERNS[2]} logs found in $LOG_FILE"
+   echo -e "\nNumber of ${ERROR_PATTERNS[2]} logs in $LOG_FILE --->"
+   grep "${ERROR_PATTERNS[2]}"  "$LOG_FILE"
+   echo -e "\nNumber of ${ERROR_PATTERNS[2]} logs found in $LOG_FILE : "
    grep -c "${ERROR_PATTERNS[2]}" "$LOG_FILE"
 done   
