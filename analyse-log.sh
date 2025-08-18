@@ -31,7 +31,15 @@ for LOG_FILE in $LOG_FILES; do
        echo -e "\nSearching $ERROR_PATTERN  logs in $LOG_FILE ---> " >> "$REPORT_FILE"
        grep "$ERROR_PATTERN" "$LOG_FILE">>"$REPORT_FILE"
        echo -e "\nNumber of $ERROR_PATTERN logs found in $LOG_FILE :   " >> "$REPORT_FILE"
-       grep -c "$ERROR_PATTERN" "$LOG_FILE">>"$REPORT_FILE"
+
+       ERROR_COUNT=$(grep -c "$ERROR_PATTERN" "$LOG_FILE")
+       echo "$ERROR_COUNT" >> "$REPORT_FILE"
+        
+       if [ "$ERROR_COUNT" -gt 10 ]; then
+	  echo -e "\nWarning!: Too many $ERROR_PATTERN"
+       fi	  
+
+
    done
 
 done   
